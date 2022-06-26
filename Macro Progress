@@ -1,4 +1,7 @@
-6/25/2022 7:15
+=======================================================================================================
+=======================================================================================================
+
+6/25/2022 7:15pm
 
 Sub DQAnalysis()
     'vvv Title vvv 2.2.3 EDITION
@@ -66,3 +69,79 @@ testMessage = "Running as Usual!"
 MsgBox (testMessage)
 
 End Sub
+=======================================================================================================
+=======================================================================================================
+
+6/26/2022 12:02am
+
+Sub DQAnalysis()
+    'name of sheet & call it to open vvv 2.2.4 EDITION
+    Worksheets("DQ Analysis").Activate
+
+    
+    Range("A1").Value = "DAQO (Ticker: DQ)"
+
+
+    'Create a header row
+    Cells(3, 1).Value = "Year"
+    Cells(3, 2).Value = "Total Daily Volume"
+    Cells(3, 3).Value = "Return"
+    
+    
+    'telling it to go back to the last sheet
+    Worksheets("2018").Activate
+
+
+    'set initial volume to zero, Bc will be adding to it
+    totalVolume = 0
+
+
+    'we need variables for start&endingprice, gets initaialized here
+    'since we arnt adding values Dim and assign data types
+    Dim startingPrice As Double
+    Dim endingPrice As Double
+
+
+    'Establish the number of rows to loop over
+    rowStart = 2
+    'copied from stack overflow
+    rowEnd = Cells(Rows.Count, "A").End(xlUp).Row
+
+
+    'loop over all the rows
+    For i = rowStart To rowEnd
+
+
+        If Cells(i, 1).Value = "DQ" Then
+
+
+            'increase totalVolume by the value in the current row
+            totalVolume = totalVolume + Cells(i, 8).Value
+
+        End If
+
+        If Cells(i - 1, 1).Value <> "DQ" And Cells(i, 1).Value = "DQ" Then
+
+            startingPrice = Cells(i, 6).Value
+
+        End If
+
+        If Cells(i + 1, 1).Value <> "DQ" And Cells(i, 1).Value = "DQ" Then
+
+            endingPrice = Cells(i, 6).Value
+
+        End If
+
+    Next i
+
+    Worksheets("DQ Analysis").Activate
+    Cells(4, 1).Value = 2018
+    Cells(4, 2).Value = totalVolume
+    Cells(4, 3).Value = (endingPrice / startingPrice) - 1
+
+
+End Sub
+=======================================================================================================
+=======================================================================================================
+
+
