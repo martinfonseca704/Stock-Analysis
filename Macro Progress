@@ -1,5 +1,6 @@
 =======================================================================================================
 =======================================================================================================
+=======================================================================================================
 
 6/25/2022 7:15pm
 
@@ -69,6 +70,7 @@ testMessage = "Running as Usual!"
 MsgBox (testMessage)
 
 End Sub
+=======================================================================================================
 =======================================================================================================
 =======================================================================================================
 
@@ -143,5 +145,176 @@ Sub DQAnalysis()
 End Sub
 =======================================================================================================
 =======================================================================================================
+=======================================================================================================
+
+6/26/2022 3:49am
+
+Sub DQAnalysis()
+    'name of sheet & call it to open
+    Worksheets("DQ Analysis").Activate
+
+    
+    Range("A1").Value = "DAQO (Ticker: DQ)"
 
 
+    'Create a header row
+    Cells(3, 1).Value = "Year"
+    Cells(3, 2).Value = "Total Daily Volume"
+    Cells(3, 3).Value = "Return"
+    
+    
+    'telling it to go back to the last sheet
+    Worksheets("2018").Activate
+
+
+    'set initial volume to zero, Bc will be adding to it
+    totalVolume = 0
+
+
+    'we need variables for start&endingprice, gets initaialized here
+    'since we arnt adding values Dim and assign data types
+    Dim startingPrice As Double
+    Dim endingPrice As Double
+
+
+    'Establish the number of rows to loop over
+    rowStart = 2
+    'copied from stack overflow
+    rowEnd = Cells(Rows.Count, "A").End(xlUp).Row
+
+
+    'loop over all the rows
+    For i = rowStart To rowEnd
+
+
+        If Cells(i, 1).Value = "DQ" Then
+
+
+            'increase totalVolume by the value in the current row
+            totalVolume = totalVolume + Cells(i, 8).Value
+
+        End If
+
+        If Cells(i - 1, 1).Value <> "DQ" And Cells(i, 1).Value = "DQ" Then
+
+            startingPrice = Cells(i, 6).Value
+
+        End If
+
+        If Cells(i + 1, 1).Value <> "DQ" And Cells(i, 1).Value = "DQ" Then
+
+            endingPrice = Cells(i, 6).Value
+
+        End If
+
+    Next i
+
+    Worksheets("DQ Analysis").Activate
+    Cells(4, 1).Value = 2018
+    Cells(4, 2).Value = totalVolume
+    Cells(4, 3).Value = (endingPrice / startingPrice) - 1
+
+
+End Sub
+
+#######################################################################################################
+
+
+
+Sub AllStocksAnalysis()
+
+
+    'name of sheet & call it to open
+    Worksheets("All Stocks Analysis").Activate
+    
+    
+    Range("A1").Value = "All Stocks (2018)."
+    
+    
+    'header row
+    Cells(3, 1).Value = "Ticker"
+    
+    Cells(3, 2).Value = "Total Daily Volume"
+    
+    Cells(3, 3).Value = "Return"
+    
+    
+    'starts ticker array
+    Dim tickers(11) As String
+    
+    tickers(0) = "AY"
+    tickers(1) = "CSIQ"
+    tickers(2) = "DQ"
+    tickers(3) = "ENPH"
+    tickers(4) = "FSLR"
+    tickers(5) = "HASI"
+    tickers(6) = "JKS"
+    tickers(7) = "RUN"
+    tickers(8) = "SEDG"
+    tickers(9) = "SPWR"
+    tickers(10) = "TERP"
+    tickers(11) = "VSLR"
+    
+    
+        For i = 0 To 11
+
+        ticker = tickers(i)
+
+        'Do stuff with ticker
+
+   Next i
+
+        'a line of code here will run 10 times
+
+        For j = 1 To 20
+
+            'a line of code here will run 200 times
+
+        Next j
+
+    Next i
+   
+
+End Sub
+
+#######################################################################################################
+
+Sub skilldrill()
+
+Worksheets("Sheet1").Activate
+
+Dim i As Integer
+    For i = 1 To 10
+    
+Cells(i, 10).Value = 1
+Cells(10, i).Value = 1
+Cells(i, 9).Value = 1
+Cells(9, i).Value = 1
+Cells(i, 8).Value = 1
+Cells(8, i).Value = 1
+Cells(i, 7).Value = 1
+Cells(7, i).Value = 1
+Cells(i, 6).Value = 1
+Cells(6, i).Value = 1
+Cells(i, 5).Value = 1
+Cells(5, i).Value = 1
+Cells(i, 4).Value = 1
+Cells(4, i).Value = 1
+Cells(i, 3).Value = 1
+Cells(3, i).Value = 1
+Cells(i, 2).Value = 1
+Cells(2, i).Value = 1
+Cells(i, 1).Value = 1
+Cells(1, i).Value = 1
+
+
+
+Next i
+
+
+
+End Sub
+
+=======================================================================================================
+=======================================================================================================
+=======================================================================================================
