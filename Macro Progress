@@ -1,23 +1,21 @@
-Sub AllStocksAnalysis()
+Sub AllStockAnalysis()
 
+'1.Format the output sheet on the "All Stocks Analysis" worksheet.
 
-    'name of sheet & call it to open
-    Worksheets("All Stocks Analysis").Activate
+Worksheets("All Stocks Analysis").Activate
     
     
     Range("A1").Value = "All Stocks (2018)."
     
-    
     'header row
+    
     Cells(3, 1).Value = "Ticker"
-    
     Cells(3, 2).Value = "Total Daily Volume"
-    
     Cells(3, 3).Value = "Return"
+
+'2.Initialize an array of all tickers.
     
-    
-    'starts ticker array
-    Dim tickers(11) As String
+    Dim tickers(12) As String
     
     tickers(0) = "AY"
     tickers(1) = "CSIQ"
@@ -32,26 +30,45 @@ Sub AllStocksAnalysis()
     tickers(10) = "TERP"
     tickers(11) = "VSLR"
     
+'3.Prepare for the analysis of tickers.
+'-Initialize variables for the starting price and ending price.
+
+Dim StartingPrice As Single
+Dim endingPrice As Single
+
+'-Activate the data worksheet.
+
+Worksheets("2018").Activate
+
+'-Find the number of rows to loop over.
+
+RowCount = Cells(Rows.Count, "A").End(xlUp).Row
+
+'4.Loop through the tickers.
+
+For i = 0 To 11
+
+    ticker = tickers(i)
+    totalVolume = 0
+
+'5.Loop through rows in the data.
+
+Worksheets("2018").Activate
+For j = 2 To RowCount
     
-        For i = 0 To 11
+'-Find the total volume for the current ticker.
 
-        ticker = tickers(i)
+If Cells(j, 1).Value = ticker Then
 
-        'Do stuff with ticker
+    totalVolume = totalVolume + Cells(j, 8).Value
+    
+    End If
 
+'-Find the starting price for the current ticker.
 
-        'a line of code here will run 10 times
+If Cells(j - 1, 1).Value <> ticker And Cells(j, 1).Value = ticker Then
 
-        For j = 1 To 20
-
-            'a line of code here will run 200 times
-
-        Next j
-
-    Next i
-   
-
-End Sub
-
-
+    StartingPrice = Cells(j, 6).Value
+    
+    End If
 
